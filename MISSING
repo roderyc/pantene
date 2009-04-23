@@ -1,46 +1,47 @@
 Condition Procedures
 ====================
 
-access-condition
-bind-condition-handler
-condition-accessor
-condition-predicate
-condition-signaller
-condition/report-string
-condition/type
-condition?
-error-irritant/noise
-make-condition-type
-signal-condition
+access-condition (R)
+bind-condition-handler (R)
+condition-accessor (R)
+condition-predicate (R)
+condition-signaller (R)
+condition/report-string (D)
+condition/type (D)
+condition? (D)
+error-irritant/noise (D)
+make-condition-type (D)
+signal-condition (R)
 signal-thread-event (?)
-with-restart
+with-restart (R)
+within-continuation (R)
 
 Condition Handlers
 ==================
 
 MIT Scheme:
 
-    standard-error-handler
+    standard-error-handler (R)
 
 Edwin:
 
-    editor-error-handler
-    evaluation-handler
-    internal-error-handler
+    editor-error-handler (R)
+    evaluation-handler (R)
+    internal-error-handler (R)
 
 Condition Types
 ===============
 
 MIT Scheme:
 
-    condition-type:allocation-error
-    condition-type:file-error
-    condition-type:error
-    condition-type:primitive-procedure-error
+    condition-type:allocation-error (D)
+    condition-type:file-error (D)
+    condition-type:error (D)
+    condition-type:primitive-procedure-error (D)
 
 Edwin:
 
-    condition-type:^G
-    condition-type:abort-current-command
-    condition-type:editor-error
+    condition-type:^G (D)
+    condition-type:abort-current-command (D)
+    condition-type:editor-error (D)
 
