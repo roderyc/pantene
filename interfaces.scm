@@ -6,3 +6,9 @@
           condition-type/field-names
           condition-type/generalizations
           condition-type?))
+
+(define-interface pantene/interface
+  (compound-interface
+   pantene:condition-type-definition/interface
+   (export)))
+
