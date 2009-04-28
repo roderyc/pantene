@@ -7,6 +7,32 @@
           condition-type/generalizations
           condition-type?))
 
+(define-interface pantene:condition-definition/interface
+  (export make-condition
+          condition?
+          condition/type
+          condition/error?
+          condition/restarts
+          condition/continuation
+          condition/report-string
+          condition-constructor
+          condition-accessor
+          condition-predicate
+          condition-signaller
+          access-condition))
+
+(define-interface pantene:restarts/interface
+  (export with-restart
+          with-simple-restart
+          bound-restarts
+          invoke-restart
+          invoke-restart-interactively
+          find-restart
+          restart/name
+          restart/description
+          restart/effector
+          restart/interactor))
+
 (define-interface pantene/interface
   (compound-interface
    pantene:condition-type-definition/interface
