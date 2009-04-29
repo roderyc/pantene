@@ -19,8 +19,9 @@
 ;continue, abort, or restart the computation it's restart object was created in.
 ;
 ;restart/interactor : restart
-;returns the interactor encapsulated in the given restart. An interactor can
-;be used to interactively gather arguments needed for the restart's effector.
+;returns the interactor encapsulated in the given restart. An interactor must
+;be a function that takes no arguments and returns the number of values restart's
+;effector expects to recieve.
 (define-record-type restart
   (%make-restart name description effector interactor)
   restart?
