@@ -1,5 +1,8 @@
 ;;; -*- Mode: Scheme; scheme48-package: (config) -*-
 
+(define-interface srfi-89/interface
+  (export define*))
+
 (define-interface pantene:condition-type-definition/interface
   (export make-condition-type
           condition-type/error?
@@ -28,6 +31,7 @@
           invoke-restart
           invoke-restart-interactively
           find-restart
+          restart?
           restart/name
           restart/description
           restart/effector
