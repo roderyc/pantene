@@ -3,6 +3,9 @@
 (define-interface srfi-89/interface
   (export define*))
 
+(define-interface srfi-39-interface
+  (export make-parameter parameterize))
+
 (define-interface pantene:condition-type-definition/interface
   (export make-condition-type
           condition-type/error?

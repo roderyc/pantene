@@ -8,6 +8,12 @@
   (files srfi-89))
 
 (define-structure
+    srfi-39
+    srfi-39/interface
+  (open scheme)
+  (files srfi-39))
+
+(define-structure
     pantene:condition-type-definition
     pantene:condition-type-definition/interface
   (open scheme srfi-9)
