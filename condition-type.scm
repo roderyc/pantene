@@ -1,5 +1,5 @@
 (define-record-type condition-type
-  (make-condition-type name generalization field-names reporter)
+  (make-condition-type name generalizations field-names reporter)
   condition-type?
   (name             condition-type/name)
   (generalizations  condition-type/generalizations)

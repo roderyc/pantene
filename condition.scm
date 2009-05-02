@@ -24,10 +24,10 @@
 (define-record-type condition
   (%make-condition condition-type continuation restarts field-alist)
   condition?
-  (type          condition/type)
-  (restarts      condition/restarts)
-  (continuation  condition/continuation)
-  (field-alist   %condition/field-alist))
+  (condition-type condition/type)
+  (continuation   condition/continuation)
+  (restarts       condition/restarts)
+  (field-alist    %condition/field-alist))
 
 (define (make-condition condition-type continuation restarts field-alist)
   (letrec ((restart-argument (lambda (restarts)
