@@ -3,9 +3,6 @@ Condition Procedures
 
 access-condition (R)
 bind-condition-handler (R)
-condition-accessor (R)
-condition-predicate (R)
-condition-signaller (R)
 condition/report-string (D)
 condition/type (D)
 condition? (D)
