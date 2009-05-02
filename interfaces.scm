@@ -6,12 +6,17 @@
 (define-interface srfi-39/interface
   (export make-parameter parameterize))
 
-(define-interface pantene:condition-type-definition/interface
+(define-interface pantene:condition-type/interface
   (export make-condition-type
           condition-type/error?
           condition-type/field-names
           condition-type/generalizations
-          condition-type?))
+          condition-type/reporter
+          condition-type?
+          condition-type:serious-condition
+          condition-type:error
+          condition-type:file-error
+          condition-type:primitive-procedure-error))
 
 (define-interface pantene:condition-definition/interface
   (export make-condition
@@ -42,6 +47,8 @@
 
 (define-interface pantene/interface
   (compound-interface
-   pantene:condition-type-definition/interface
-   (export)))
+   pantene:condition-type/interface
+   pantene:condition-definition/interface
+   pantene:restarts/interface))
+
 
