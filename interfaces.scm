@@ -15,6 +15,7 @@
           condition-type?
           condition-type:serious-condition
           condition-type:error
+          condition-type:simple-error
           condition-type:file-error
           condition-type:primitive-procedure-error))
 
@@ -30,7 +31,11 @@
           condition-accessor
           condition-predicate
           condition-signaller
-          access-condition))
+          access-condition
+          bind-condition-handler
+          signal-condition
+          ignore-errors
+          error))
 
 (define-interface pantene:restarts/interface
   (export with-restart
