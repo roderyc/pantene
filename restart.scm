@@ -50,8 +50,7 @@
 (define (with-simple-restart name description thunk)
   (call-with-current-continuation
    (lambda (continuation)
-     (with-restart name description (lambda () (continuation)) values
-       thunk))))
+     (with-restart name description continuation values thunk))))
 
 ;Calls restart's effector using args as arguments.
 (define (invoke-restart restart . args)
@@ -79,11 +78,10 @@
 ;particular restart and the condition object that has been signalled. In this
 ;way the handler finds only restarts that were available when the condition was
 ;created (usually the same as when it was signalled).
-;
-;To Implement: allowing restarts to be a condition
 (define* (find-restart name (restarts #f))
   (let ((restart-list
-         (cond ((equal? restarts #f) (bound-restarts))
+         (cond ((not restarts) (bound-restarts))
+               ((condition? restarts) (condition/restarts restarts))
                ((list? restarts) restarts)
                (else '()))))
     (find (lambda (x) (equal? (restart/name x) name)) restart-list)))
