@@ -1,16 +1,7 @@
 Condition Procedures
 ====================
-
-access-condition (R)
-bind-condition-handler (R)
-condition/report-string (D)
-condition/type (D)
-condition? (D)
 error-irritant/noise (D)
-make-condition-type (D)
-signal-condition (R)
 signal-thread-event (?)
-with-restart (R)
 within-continuation (R)
 
 Condition Handlers
