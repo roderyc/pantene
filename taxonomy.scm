@@ -1,3 +1,10 @@
+(define (report message field-name)
+  (lambda (condition port)
+     (display message port)
+     (newline port)
+     (display (access-condition condition field-name) port)
+     (newline port)))
+
 (define condition-type:serious-condition
   (make-condition-type 'SERIOUS-CONDITION #f '() #f))
 
@@ -7,6 +14,18 @@
    condition-type:serious-condition
    '()
    #f))
+
+(define condition-type:simple-error
+  (make-condition-type
+   'simple-error
+   condition-type:error
+   '(message irritants)
+   (lambda (condition port)
+     (display (access-condition condition 'message) port)
+     (if (not (null? (access-condition condition 'irritants)))
+         (begin
+           (display " : " port)
+           (display (access-condition condition 'irritants) port))))))
 
 (define condition-type:file-error
   (make-condition-type
@@ -22,8 +41,4 @@
    '(OPERATOR OPERANDS)
    (report "This is a primitive procedure error" 'operator)))
 
-(define (report message field-name)
-  (lambda (condition port)
-     (display message port)
-     (newline)
-     (display (access-condition condition field-name))))
+
