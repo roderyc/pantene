@@ -33,6 +33,7 @@
           condition-signaller
           access-condition
           bind-condition-handler
+          standard-error-handler
           signal-condition
           ignore-errors
           error))

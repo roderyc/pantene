@@ -13,7 +13,9 @@
     ((pantene:condition-definition pantene:condition-definition/interface)
      (pantene:condition-type       pantene:condition-type/interface)
      (pantene:restarts             pantene:restarts/interface))
-  (open scheme srfi-1 srfi-6 srfi-9 srfi-39 srfi-89 signals)
+  (open scheme
+        (modify signals (rename (error system:error)))
+        srfi-1 srfi-6 srfi-9 srfi-39 srfi-89 signals)
   (files condition
          condition-type
          taxonomy

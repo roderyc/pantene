@@ -83,8 +83,7 @@
 ;Prints the given condition to standard out. This should prompt the user to
 ;select a restart and enter a debugging repl, but this needs to be discussed.
 (define (standard-error-handler condition)
-  (display (condition/report-string condition))
-  (newline))
+  (system:error (condition/report-string condition)))
 
 ;Executes thunk with a condition handler that intercepts the signaling of any
 ;specialization of condition-type:error and immediately terminates the execution
