@@ -3,6 +3,14 @@
 (define-interface srfi-89/interface
   (export define*))
 
+(define-interface srfi-78/interface
+  (export (check :syntax)
+          (check-ec :syntax)
+          check-report
+          check-set-mode!
+          check-reset!
+          check-passed?))
+
 (define-interface srfi-39/interface
   (export make-parameter parameterize))
 

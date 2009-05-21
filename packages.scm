@@ -5,6 +5,11 @@
   (for-syntax (open scheme let-opt (subset signals (syntax-error)) srfi-1))
   (files srfi-89))
 
+(define-structure srfi-78 srfi-78/interface
+  (open scheme srfi-23 srfi-42 pp)
+  (files srfi-78)
+  (begin (define check:write p)))
+
 (define-structure srfi-39 srfi-39/interface
   (open scheme)
   (files srfi-39))
