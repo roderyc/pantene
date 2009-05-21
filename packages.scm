@@ -15,10 +15,10 @@
      (pantene:restarts             pantene:restarts/interface))
   (open scheme
         (modify signals (rename (error system:error)))
-        srfi-1 srfi-6 srfi-9 srfi-39 srfi-89 signals)
-  (files condition
-         condition-type
+        srfi-1 srfi-6 srfi-9 srfi-13 srfi-14 srfi-39 srfi-89 signals)
+  (files condition-type
          taxonomy
+         condition
          restart))
 
 (define-structure pantene pantene/interface

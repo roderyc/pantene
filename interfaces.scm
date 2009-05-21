@@ -8,6 +8,7 @@
 
 (define-interface pantene:condition-type/interface
   (export make-condition-type
+          condition-type/name
           condition-type/error?
           condition-type/field-names
           condition-type/generalizations
@@ -16,6 +17,13 @@
           condition-type:serious-condition
           condition-type:error
           condition-type:simple-error
+          condition-type:illegal-datum
+          condition-type:datum-out-of-range
+          condition-type:wrong-type-datum
+          condition-type:wrong-type-argument
+          condition-type:bad-range-argument
+          condition-type:control-error
+          condition-type:no-such-restart
           condition-type:file-error
           condition-type:primitive-procedure-error))
 
@@ -36,7 +44,11 @@
           standard-error-handler
           signal-condition
           ignore-errors
-          error))
+          error
+          error:wrong-type-argument
+          error:bad-range-argument
+          error:datum-out-of-range
+          error:no-such-restart))
 
 (define-interface pantene:restarts/interface
   (export with-restart
@@ -49,12 +61,16 @@
           restart/name
           restart/description
           restart/effector
-          restart/interactor))
+          restart/interactor
+          abort
+          continue
+          muffle-warning
+          retry
+          store-value
+          use-value))
 
 (define-interface pantene/interface
   (compound-interface
    pantene:condition-type/interface
    pantene:condition-definition/interface
    pantene:restarts/interface))
-
-
