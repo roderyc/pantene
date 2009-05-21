@@ -31,3 +31,20 @@
         pantene:condition-type
         pantene:condition-definition
         pantene:restarts))
+
+(define-structure pantene:condition-tests (export)
+  (open scheme pantene srfi-78)
+  (files (tests test-conditions)))
+
+(define-structure pantene:condition-type-tests (export)
+  (open scheme pantene srfi-78)
+  (files (tests test-condition-types)))
+
+(define-structure pantene:restart-tests (export)
+  (open scheme pantene srfi-1 srfi-78)
+  (files (tests test-restarts)))
+
+(define-structure pantene:tests (export)
+  (open pantene:condition-tests
+        pantene:condition-type-tests
+        pantene:restart-tests))
