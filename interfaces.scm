@@ -1,5 +1,17 @@
 ;;; -*- Mode: Scheme; scheme48-package: (config) -*-
 
+(define-interface let-opt-expanders/interface
+  (export expand-let-optionals
+          expand-let-optionals*))
+
+(define-interface let-opt/interface
+  (export (let-optionals  :syntax)
+          (let-optionals* :syntax)
+          (:optional      :syntax)))
+
+(define-interface srfi-8/interface
+  (export receive))
+
 (define-interface srfi-89/interface
   (export define*))
 
