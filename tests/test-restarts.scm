@@ -12,11 +12,11 @@
         (car (with-simple-restart 'blah "Test" (lambda () (bound-restarts)))))
        => "Test")
 
-;; A restart is established in frob-alist-element that continues the
-;; computation with a given value. Then, a condition handler is bound for
-;; wrong-type-datum conditions in frob-alist that invokes this restart
-;; with the value -1. frob-alist-element will signal a wrong-type-datum
-;; condition if its argument is not a pair, and so return a -1.
+;;; A restart is established in frob-alist-element that continues the
+;;; computation with a given value. Then, a condition handler is bound for
+;;; wrong-type-datum conditions in frob-alist that invokes this restart
+;;; with the value -1. frob-alist-element will signal a wrong-type-datum
+;;; condition if its argument is not a pair, and so return a -1.
 (letrec ((frob-alist (lambda (alist)
                        (bind-condition-handler (list condition-type:wrong-type-datum)
                                                (lambda (condition) (use-value -1 condition))

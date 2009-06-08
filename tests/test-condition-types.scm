@@ -1,12 +1,12 @@
-;; condition-type/name should simply return the symbol representing
-;; the name of the type.
+;;; condition-type/name should simply return the symbol representing
+;;; the name of the type.
 (check (condition-type/name condition-type:file-error) => 'file-error)
 
 (check (condition-type/name condition-type:serious-condition) => 'serious-condition)
 
-;; The generalizations for condition-type/generalisations argument
-;; should include itself and all of its direct ancestor's
-;; generalizations.
+;;; The generalizations for condition-type/generalisations argument
+;;; should include itself and all of its direct ancestor's
+;;; generalizations.
 (check (condition-type/generalizations condition-type:file-error) =>
        (list condition-type:file-error
              condition-type:error
@@ -15,15 +15,15 @@
 (check (condition-type/generalizations condition-type:serious-condition) =>
        (list condition-type:serious-condition))
 
-;; field-names for a condition type should be a list of its field names or
-;; the empty list if it has no fields.
+;;; field-names for a condition type should be a list of its field names or
+;;; the empty list if it has no fields.
 (check (condition-type/field-names condition-type:simple-error) =>
        '(message irritants))
 
 (check (condition-type/field-names condition-type:serious-condition) => '())
 
-;; condition/report-string calls the procedure returned by condition-type/reporter
-;; so it's used for these tests.
+;;; condition/report-string calls the procedure returned by condition-type/reporter
+;;; so it's used for these tests.
 (check (condition/report-string (ignore-errors (lambda () (error "Error!"
                                                                  1 2 3 4 5 6))))
        => "Error! : 1 2 3 4 5 6")
