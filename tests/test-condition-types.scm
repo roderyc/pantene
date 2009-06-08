@@ -2,7 +2,7 @@
 ;; the name of the type.
 (check (condition-type/name condition-type:file-error) => 'file-error)
 
-(check (condition-type/name condition-type:serious-condition => 'serious-condition))
+(check (condition-type/name condition-type:serious-condition) => 'serious-condition)
 
 ;; The generalizations for condition-type/generalisations argument
 ;; should include itself and all of its direct ancestor's
