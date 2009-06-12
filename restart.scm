@@ -20,8 +20,9 @@
 
 ;;; restart/interactor : restart
 ;;; returns the interactor encapsulated in the given restart. An interactor must
-;;; be a function that takes no arguments and returns the number of values restart's
-;;; effector expects to recieve.
+;;; be either a function that takes no arguments and returns the number of
+;;; values restart's effector expects to receive, or #f if the restart is not
+;;; meant to be invoked interactively.
 (define-record-type restart
   (%make-restart name description effector interactor)
   restart?
