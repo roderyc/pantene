@@ -63,7 +63,8 @@
 ;;; the arguments needed for restart's effector. It then calls the effector,
 ;;; passing these arguments to it.
 (define (invoke-restart-interactively restart)
-  (if (restart? restart)
+  (if (and (restart? restart)
+           (restart/interactor restart))
       (call-with-values (restart/interactor restart)
         (restart/effector restart))
       (error "invalid restart argument"
