@@ -87,7 +87,8 @@
           muffle-warning
           retry
           store-value
-          use-value))
+          use-value
+          (restart-case :syntax)))
 
 (define-interface pantene/interface
   (compound-interface

@@ -170,31 +170,37 @@
         (invoke-restart restart value))))
 
 ;;;; Restart Syntax
-;;; (restart-case <expression> <clause1> ...)
+;;; (restart-case <expression> <clause> ...)
 ;;; Evaluates <expression> in a dynamic environment where restarts represented
 ;;; by each <clause> are in effect. If none of the restarts are invoked by
 ;;; <expression>, any and all values it returns are returned by restart-case.
 ;;; If a restart is invoked, the effector of that restart is evaluated and
-;;; any values it returns are returned by restart-case. In the latter case, the
-;;; dynamic environment of the effector will not have any of the other restarts
-;;; established by restart-case in effect.
+;;; any values it returns are returned by restart-case.
 ;;;
 ;;; Clauses are of the form:
-;;; (<restart-name> <effector-arguments> ...<option>... <effector-body>)
+;;; (<restart-name> <description> <effector-arguments> <effector-body>)
 ;;;
 ;;; <restart-name> should be a valid name for a restart.
+;;;
+;;; <description> should be a valid description for a restart.
 ;;;
 ;;; <effector-arguments> and <effector-body> are the list of arguments and body
 ;;; for the effector of the restart respectively.
 ;;;
-;;; <option>s are keyword delimited expressions. The possible keywords are:
-;;;
-;;; :interactor
-;;; The expression associated with this must be a suitable interactor for a
-;;; restart. If this option isn't given, #f will be used as the interactor
-;;; for the restart of that particular <clause>, signifying that it's not meant
-;;; to be restarted interactively.
-;;;
-;;; :description
-;;; This should be a valid description for a restart object. If this option
-;;; isn't provided, the restart will have no description.
+;;; For now, #f will be used as the interactor for every restart, signifying
+;;; that they are not meant to be restarted interactively.
+(define-syntax make-restart-for-clause
+  (syntax-rules ()
+    ((make-restart-for-clause (restart-name description effector-arguments effector-body) k)
+     (%make-restart restart-name description
+                    (lambda effector-arguments (k effector-body)) #f))))
+
+(define-syntax restart-case
+  (syntax-rules ()
+    ((restart-case expression clause ...)
+     (call-with-current-continuation
+      (lambda (k)
+        (parameterize ((*current-restarts*
+                        (append (list (make-restart-for-clause clause k) ...)
+                                (*current-restarts*))))
+                      expression))))))
