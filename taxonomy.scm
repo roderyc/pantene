@@ -51,7 +51,7 @@
 
 (define write-type-description
   (let ((char-set:vowels
-         (char-set #\a #\e #\i #\o #\u #\a #\e #\i #\o #\u)))
+         (char-set #\a #\e #\i #\o #\u)))
     (lambda (condition port)
       (let ((type (access-condition condition 'type)))
         (if (string? type)
