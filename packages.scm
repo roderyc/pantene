@@ -32,20 +32,20 @@
 (define-structures
     ((pantene:condition-definition pantene:condition-definition/interface)
      (pantene:condition-type       pantene:condition-type/interface)
-     (pantene:restarts             pantene:restarts/interface))
+     (pantene:restarter           pantene:restarter/interface))
   (open scheme
         (modify signals (rename (error system:error)))
         srfi-1 srfi-6 srfi-9 srfi-13 srfi-14 srfi-39 srfi-89 signals)
   (files condition-type
          taxonomy
          condition
-         restart))
+         restarter))
 
 (define-structure pantene pantene/interface
   (open scheme
         pantene:condition-type
         pantene:condition-definition
-        pantene:restarts))
+        pantene:restarter))
 
 (define-structure pantene:condition-tests (export)
   (open scheme pantene srfi-78)
@@ -55,11 +55,11 @@
   (open scheme pantene srfi-78)
   (files (tests test-condition-types)))
 
-(define-structure pantene:restart-tests (export)
+(define-structure pantene:restarter-tests (export)
   (open scheme pantene srfi-1 srfi-78)
-  (files (tests test-restarts)))
+  (files (tests test-restarters)))
 
 (define-structure pantene:tests (export)
   (open pantene:condition-tests
         pantene:condition-type-tests
-        pantene:restart-tests))
+        pantene:restarter-tests))

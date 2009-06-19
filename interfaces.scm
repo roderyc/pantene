@@ -70,7 +70,7 @@
           error:datum-out-of-range
           error:no-such-restart))
 
-(define-interface pantene:restarts/interface
+(define-interface pantene:restarter/interface
   (export with-restart
           with-simple-restart
           bound-restarts
@@ -94,4 +94,4 @@
   (compound-interface
    pantene:condition-type/interface
    pantene:condition-definition/interface
-   pantene:restarts/interface))
+   pantene:restarter/interface))
