@@ -11,11 +11,11 @@
 (check (condition/type (make-condition condition-type:file-error #f '() '())) =>
        condition-type:file-error)
 
-(check (restart/name
-        (car (condition/restarts
-              (with-simple-restart 'blah "Test restart"
-                                   (lambda () (ignore-errors
-                                               (lambda () (error "Error!"))))))))
+(check (restarter-tag
+        (car (condition-restarters
+              (with-exiting-restarter 'blah "Test restarter"
+                                      (lambda () (ignore-errors
+                                                  (lambda () (error "Error!"))))))))
        => 'blah)
 
 (check (condition/report-string

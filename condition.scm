@@ -11,7 +11,7 @@
 ;;; condition/type : condition
 ;;; returns the condition-type of the given condition.
 
-;;; condition/restarts : condition
+;;; condition-restarters : condition
 ;;; returns the list of restarts for condition. These are usually the restarts
 ;;; in effect when the condition was created.
 
@@ -24,11 +24,11 @@
 ;;; returns an alist of condition's fields. Field names can be any object, but
 ;;; are usually symbols or strings. Uninitialized fields are set to #f.
 (define-record-type condition
-  (%make-condition condition-type continuation restarts field-alist)
+  (%make-condition condition-type continuation restarters field-alist)
   condition?
   (condition-type condition/type)
   (continuation   condition/continuation)
-  (restarts       condition/restarts)
+  (restarters     condition-restarters)
   (field-alist    %condition/field-alist))
 
 ;;; A list of the condition handlers in effect for the current dynamic extent
@@ -114,10 +114,10 @@
 (define (error reason . arguments)
   (let ((condition (cond ((condition? reason) reason)
                          ((condition-type? reason)
-                          (make-condition reason #f (bound-restarts) arguments))
+                          (make-condition reason #f (current-restarters) arguments))
                          (else (make-condition condition-type:simple-error
                                                #f
-                                               (bound-restarts)
+                                               (current-restarters)
                                                (list (cons 'message reason)
                                                      (cons 'irritants arguments)))))))
     (signal-condition condition)
@@ -126,14 +126,14 @@
 ;;; Returns a condition object like %make-condition, but restarts can either be
 ;;; a list of restarts, or a condition, in which case the restarts field of the
 ;;; condition is used.
-(define (make-condition condition-type continuation restarts field-alist)
-  (letrec ((restart-argument (lambda (restarts)
-                               (if (condition? restarts)
-                                   (condition/restarts restarts)
-                                   (list-copy restarts)))))
+(define (make-condition condition-type continuation restarters field-alist)
+  (letrec ((restart-argument (lambda (restarters)
+                               (if (condition? restarters)
+                                   (condition-restarters restarters)
+                                   (list-copy restarters)))))
     (%make-condition condition-type
                      continuation
-                     (restart-argument restarts)
+                     (restart-argument restarters)
                      field-alist)))
 
 ;;; Returns true if condition is a specialization of condition-type:error.
@@ -170,7 +170,7 @@
 (define (condition-constructor condition-type field-names)
   (if (every (lambda (x) (member x (condition-type/field-names condition-type)))
              field-names)
-      (lambda (continuation restarts . field-values)
+      (lambda (continuation restarters . field-values)
         (let ((field-alist (map (lambda (x) (cons x #f))
                                 (condition-type/field-names condition-type))))
           (for-each (lambda (x y) (set-cdr! (assoc x field-alist) y))
@@ -178,7 +178,7 @@
                     field-values)
           (make-condition condition-type
                           continuation
-                          restarts
+                          restarters
                           field-alist)))))
 
 ;;; Returns a function that takes a condition of type condition-type and returns
@@ -211,7 +211,7 @@
 	 (let ((condition
 		(apply constructor
 		       (cons* continuation
-                              (bound-restarts)
+                              (current-restarters)
                               field-values))))
 	   (signal-condition condition)
 	   (default-handler condition)))))))
@@ -237,7 +237,7 @@
                        '(datum)
                        standard-error-handler))
 
-(define error:no-such-restart
-  (condition-signaller condition-type:no-such-restart
+(define error:no-such-restarter
+  (condition-signaller condition-type:no-such-restarter
                        '(name)
                        standard-error-handler))

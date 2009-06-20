@@ -1,15 +1,15 @@
-(check (bound-restarts) => '())
+(check (current-restarters) => '())
 
-(check (restart?
-        (car (with-simple-restart 'blah "Test" (lambda () (bound-restarts)))))
+(check (restarter?
+        (car (with-exiting-restarter 'blah "Test" (lambda () (current-restarters)))))
        => #t)
 
-(check (restart/name
-        (car (with-simple-restart 'blah "Test" (lambda () (bound-restarts)))))
+(check (restarter-tag
+        (car (with-exiting-restarter 'blah "Test" (lambda () (current-restarters)))))
        => 'blah)
 
-(check (restart/description
-        (car (with-simple-restart 'blah "Test" (lambda () (bound-restarts)))))
+(check (restarter-description
+        (car (with-exiting-restarter 'blah "Test" (lambda () (current-restarters)))))
        => "Test")
 
 ;;; A restart is established in frob-alist-element that continues the
@@ -24,10 +24,10 @@
                                     (lambda () (map frob-alist-element alist)))))
          (frob-alist-element
           (lambda (element)
-            (restart-case (if (pair? element)
-                              (+ (cdr element) 10)
-                              (error condition-type:wrong-type-datum
-                                     (cons 'datum element)
-                                     (cons 'type 'pair)))
-                          ('use-value "Use the given value." (value) value)))))
+            (restarter-bind (if (pair? element)
+                                (+ (cdr element) 10)
+                                (error condition-type:wrong-type-datum
+                                       (cons 'datum element)
+                                       (cons 'type 'pair)))
+                            ('use-value "Use the given value." (value) value)))))
   (check (frob-alist '((bleh . 23) foo (bar . 4))) => '(33 -1 14)))

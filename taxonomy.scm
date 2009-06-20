@@ -124,13 +124,13 @@
    '()
    "Control error."))
 
-(define condition-type:no-such-restart
+(define condition-type:no-such-restarter
   (make-condition-type
-   'no-such-restart
+   'no-such-restarter
    condition-type:control-error
    '(name)
    (lambda (condition port)
-     (display "The restart named " port)
+     (display "The restarter named " port)
      (display (access-condition condition 'NAME) port)
      (display " is not bound." port))))
 

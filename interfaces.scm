@@ -52,7 +52,7 @@
           condition?
           condition/type
           condition/error?
-          condition/restarts
+          condition-restarters
           condition/continuation
           condition/report-string
           condition-constructor
@@ -71,24 +71,24 @@
           error:no-such-restart))
 
 (define-interface pantene:restarter/interface
-  (export with-restart
-          with-simple-restart
-          bound-restarts
-          invoke-restart
-          invoke-restart-interactively
-          find-restart
-          restart?
-          restart/name
-          restart/description
-          restart/effector
-          restart/interactor
+  (export with-restarter
+          with-exiting-restarter
+          current-restarters
+          restart
+          restart-interactively
+          find-restarter
+          restarter?
+          restarter-tag
+          restarter-description
+          restarter-invoker
+          restarter-interactor
           abort
           continue
           muffle-warning
           retry
           store-value
           use-value
-          (restart-case :syntax)))
+          (restarter-bind :syntax)))
 
 (define-interface pantene/interface
   (compound-interface
