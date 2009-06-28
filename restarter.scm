@@ -8,7 +8,7 @@
 ;;; situations, the signaler must provide ways for the handler to restart
 ;;; the computation, some of which may require extra input. The decision of
 ;;; which method of recovery to choose can be left to a physical user, who
-;;; maybe be prompted for the input. Restarters allow the handler or user
+;;; may be prompted for the input. Restarters allow the handler or user
 ;;; to communicate a decision to the signaler.
 ;;;
 ;;; A restarter is an object of a new disjoint type with four fields:
@@ -29,13 +29,13 @@
 ;;;   non-interactive
 ;;;
 ;;; Restarters are constructed explicitly with MAKE-RESTARTER or implicitly
-;;; with CALL-WITH-RESTARTER, CALL-WITH-INTERACTIVE-RESTARTER, etc.  The tag
+;;; with CALL-WITH-RESTARTER, CALL-WITH-INTERACTIVE-RESTARTER, etc. The tag
 ;;; and description fields are explicitly accessible; the invoker and
 ;;; interactor fields are used only through the procedures RESTART and
 ;;; RESTART-INTERACTIVELY.
 ;;;
 ;;; A field is allocated in the dynamic environment for a list of currently
-;;; available restarters in a particular dynamic context.  This list can be
+;;; available restarters in a particular dynamic context. This list can be
 ;;; obtained with the CURRENT-RESTARTERS procedure; the WITH-RESTARTER
 ;;; procedure pushes a restarter onto the list for a particular dynamic
 ;;; extent, as do a number of other wrappers around it.
@@ -54,9 +54,9 @@
 ;;; (RESTART restarter arg ...) -> values (may not return)
 ;;; (RESTART-INTERACTIVELY restarter) -> values (may not return)
 ;;;   RESTART calls a restarter's invoker  procedure with the given
-;;;   arguments.  RESTART-INTERACTIVELY calls a restarter's interactor
+;;;   arguments. RESTART-INTERACTIVELY calls a restarter's interactor
 ;;;   procedure with zero arguments, and then passes the values it returned
-;;;   to the restarter's invoker.  The RESTARTER argument may be a
+;;;   to the restarter's invoker. The RESTARTER argument may be a
 ;;;   restarter or any object such that there is a restarter in the list of
 ;;;   current restarters whose tag is the object; that restarter's invoker
 ;;;   or interactor is used.
@@ -65,10 +65,10 @@
 ;;; (WITH-RESTARTER restarter thunk) -> values
 ;;; (FIND-RESTARTER tag [list]) -> restarter or #F
 ;;;   CURRENT-RESTARTERS returns a list of the current restarters in the
-;;;   nested order in which they were successively pushed.  It is an error
-;;;   to modify this list.  WITH-RESTARTER calls THUNK, for whose dynamic
+;;;   nested order in which they were successively pushed. It is an error
+;;;   to modify this list. WITH-RESTARTER calls THUNK, for whose dynamic
 ;;;   extent RESTARTER is pushed onto the list of current restarters, and
-;;;   returns the values returned by THUNK.  FIND-RESTARTER searches in the
+;;;   returns the values returned by THUNK. FIND-RESTARTER searches in the
 ;;;   current restarter list, or LIST if it is supplied, for the most
 ;;;   recently pushed restarter whose tag is equal to the given tag in the
 ;;;   sense of EQV?. If there is no such restarter in the list, FIND-RESTARTER
@@ -163,7 +163,7 @@
 ;;; interactive. #f will be used as their interactor , signifying that they are
 ;;; not meant to be restarted interactively.
 
-(define-record-type restarter
+(define-record-type <restarter>
   (make-restarter tag description invoker interactor)
   restarter?
   (tag restarter-tag)
@@ -206,7 +206,7 @@
 (define* (find-restarter tag (restarters #f))
   (let ((restarter-list
          (cond ((not restarters) (current-restarters))
-               ((condition? restarters) (condition-restarters restarters))
+               ((condition? restarters) (condition/restarters restarters))
                ((pair? restarters) restarters)
                (else '()))))
     (find (lambda (x) (eqv? (restarter-tag x) tag)) restarter-list)))

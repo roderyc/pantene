@@ -29,7 +29,6 @@
 (define-interface pantene:condition-type/interface
   (export make-condition-type
           condition-type/name
-          condition-type/error?
           condition-type/field-names
           condition-type/generalizations
           condition-type/reporter
@@ -43,7 +42,7 @@
           condition-type:wrong-type-argument
           condition-type:bad-range-argument
           condition-type:control-error
-          condition-type:no-such-restart
+          condition-type:no-such-restarter
           condition-type:file-error
           condition-type:primitive-procedure-error))
 
@@ -51,24 +50,21 @@
   (export make-condition
           condition?
           condition/type
-          condition/error?
-          condition-restarters
-          condition/continuation
+          condition/restarters
           condition/report-string
           condition-constructor
           condition-accessor
           condition-predicate
           condition-signaller
           access-condition
-          bind-condition-handler
+          with-condition-handler
           standard-error-handler
-          signal-condition
-          ignore-errors
+          signal
           error
           error:wrong-type-argument
           error:bad-range-argument
           error:datum-out-of-range
-          error:no-such-restart))
+          error:no-such-restarter))
 
 (define-interface pantene:restarter/interface
   (export with-restarter

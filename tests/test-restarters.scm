@@ -19,7 +19,7 @@
 ;;; condition if its argument is not a pair, and so return a -1.
 (letrec ((frob-alist
           (lambda (alist)
-            (bind-condition-handler (list condition-type:wrong-type-datum)
+            (with-condition-handler (list condition-type:wrong-type-datum)
                                     (lambda (condition) (use-value -1 condition))
                                     (lambda () (map frob-alist-element alist)))))
          (frob-alist-element

@@ -1,23 +1,17 @@
-(check (condition? (make-condition condition-type:error #f '() '())) => #t)
-
-(check (condition? (ignore-errors (lambda () (error "Error!")))) => #t)
+(check (condition? (make-condition condition-type:error '() '())) => #t)
 
 (check (condition? condition-type:error) => #f)
 
-(check (not (condition/error? (make-condition condition-type:error #f '() '()))) => #f)
-
-(check (condition/error? (make-condition condition-type:serious-condition #f '() '())) => #f)
-
-(check (condition/type (make-condition condition-type:file-error #f '() '())) =>
+(check (condition/type (make-condition condition-type:file-error '() '())) =>
        condition-type:file-error)
 
-(check (restarter-tag
-        (car (condition-restarters
-              (with-exiting-restarter 'blah "Test restarter"
-                                      (lambda () (ignore-errors
-                                                  (lambda () (error "Error!"))))))))
+(check (call-with-current-continuation
+        (lambda (k)
+          (with-condition-handler
+           '()
+           (lambda (condition)
+             (k (restarter-tag (car (condition/restarters condition)))))
+           (lambda ()
+             (with-exiting-restarter 'blah "Test restarter"
+                                     (lambda () (error "Error!")))))))
        => 'blah)
-
-(check (condition/report-string
-        (ignore-errors (lambda () (error "Error!" 1 2 3))))
-       => "Error! : 1 2 3")

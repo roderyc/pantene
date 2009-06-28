@@ -30,7 +30,3 @@
                                     '()))))
     (condition-type/set-generalizations! condition-type generalizations)
     condition-type))
-
-(define (condition-type/error? condition)
-  (member condition-type:error
-          (condition-type/generalizations condition)))

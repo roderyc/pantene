@@ -1,3 +1,10 @@
+(define (grab-condition thunk)
+  (call-with-current-continuation
+   (lambda (continuation)
+     (with-condition-handler '()
+                             continuation
+                             thunk))))
+
 ;;; condition-type/name should simply return the symbol representing
 ;;; the name of the type.
 (check (condition-type/name condition-type:file-error) => 'file-error)
@@ -24,32 +31,32 @@
 
 ;;; condition/report-string calls the procedure returned by condition-type/reporter
 ;;; so it's used for these tests.
-(check (condition/report-string (ignore-errors (lambda () (error "Error!"
-                                                                 1 2 3 4 5 6))))
+(check (condition/report-string
+        (grab-condition (lambda () (error "Error!" 1 2 3 4 5 6))))
        => "Error! : 1 2 3 4 5 6")
 
-(check (condition/report-string (ignore-errors
-                                 (lambda () (error condition-type:wrong-type-datum
-                                                   (cons 'datum 'blah)
-                                                   (cons 'type "integer")))))
+(check (condition/report-string
+        (grab-condition (lambda () (error condition-type:wrong-type-datum
+                                          (cons 'datum 'blah)
+                                          (cons 'type "integer")))))
        => "The object blah is not an integer.")
 
-(check (condition/report-string (ignore-errors
-                                 (lambda () (error condition-type:wrong-type-argument
-                                                   (cons 'datum 'blah)
-                                                   (cons 'type "integer")
-                                                   (cons 'operator 'add)
-                                                   (cons 'operand 'x)))))
+(check (condition/report-string
+        (grab-condition (lambda () (error condition-type:wrong-type-argument
+                                          (cons 'datum 'blah)
+                                          (cons 'type "integer")
+                                          (cons 'operator 'add)
+                                          (cons 'operand 'x)))))
        => "The object blah, passed as the argument x to add, is not an integer.")
 
-(check (condition/report-string (ignore-errors
-                                 (lambda () (error condition-type:bad-range-argument
-                                                   (cons 'datum 23)
-                                                   (cons 'operator 'indexer)
-                                                   (cons 'operand 'index)))))
+(check (condition/report-string
+        (grab-condition (lambda () (error condition-type:bad-range-argument
+                                          (cons 'datum 23)
+                                          (cons 'operator 'indexer)
+                                          (cons 'operand 'index)))))
        => "The object 23, passed as the argument index to indexer, is not in the correct range.")
 
 (check (condition/report-string
-        (ignore-errors (lambda () (error condition-type:file-error
-                                         (cons 'filename "foo.scm")))))
+        (grab-condition (lambda () (error condition-type:file-error
+                                          (cons 'filename "foo.scm")))))
        => "File error associated with: foo.scm")
