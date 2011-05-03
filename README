@@ -1,0 +1,12 @@
+* Dependencies
+This code should be portable r5rs scheme, but was developed with
+scheme48 <http://s48.org/>. The version should be 1.8 or above.
+
+* Getting started
+To load it in that environment, run
+
+  $ scheme48
+  > ,exec ,load load.scm
+
+This will open the pantene package, and run the tests in the
+patente:tests package.
